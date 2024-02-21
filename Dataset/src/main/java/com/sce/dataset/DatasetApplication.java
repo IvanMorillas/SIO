@@ -1,5 +1,9 @@
 package com.sce.dataset;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 
 
@@ -18,6 +24,35 @@ public class DatasetApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DatasetApplication.class);
+	}
+
+	@Bean
+	public CommandLineRunner readCSV(){
+		return (args) -> {
+			FileReader fileCSV = null;
+			CSVReader csvReader = null;
+			try{
+				fileCSV = new FileReader("C:\\Users\\ivanm\\OneDrive\\Escritorio\\Universidad\\4º\\SIO\\Practica\\Practica1\\Dataset\\Persons.csv");
+				CSVParser puntoYcoma = new CSVParserBuilder().withSeparator(',').build();
+				csvReader = new CSVReaderBuilder(fileCSV).withCSVParser(puntoYcoma).build();
+				String[] line = null;
+				while((line = csvReader.readNext()) != null){
+					System.out.println(line[0] + "|" + line[1]
+							+ "|" + line[2] + "|" + line[3] + "|" + line[4]);
+				}
+			} catch (IOException e) {
+				System.out.println(e);
+			}catch (Exception e) {
+				System.out.println(e);
+			}finally {
+				try{
+					fileCSV.close();
+					csvReader.close();
+				}catch (IOException e){
+					System.out.println(e);
+				}
+			}
+		};
 	}
 
 	@Bean
