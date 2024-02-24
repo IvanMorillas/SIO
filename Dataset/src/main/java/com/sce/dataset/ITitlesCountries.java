@@ -2,6 +2,6 @@ package com.sce.dataset;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface ITitle extends CrudRepository<Titles, String> {
+public interface ITitlesCountries extends CrudRepository<TitlesCountries, Integer> {
 
 }

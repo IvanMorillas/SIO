@@ -3,8 +3,7 @@ package com.sce.dataset;
 import jakarta.persistence.*;
 
 @Entity
-//@Table(name = "person")
-public class Person {
+public class Persons {
 
     @Id
     private int personId;
@@ -17,9 +16,9 @@ public class Person {
 
     private String personRole;
 
-    protected Person(){}
+    protected Persons(){}
 
-    public Person(int personId, String titleId, String name, String character, String role){
+    public Persons(int personId, String titleId, String name, String character, String role){
         this.personId = personId;
         this.titleId = titleId;
         this.personName = name;

@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "titles")
-public class Title {
+public class Titles {
 
     @Id
     private String titleId;
@@ -23,9 +22,9 @@ public class Title {
 
     private int titleRuntime;
 
-    private List<String> titleGenres;
+    //private List<String> titleGenres;
 
-    private List<String> titleProductionCountries;
+    //private List<String> titleProductionCountries;
 
     private double titleSeasons;
 
@@ -39,9 +38,9 @@ public class Title {
 
     private double titleTmdbScore;
 
-    protected Title() {}
+    protected Titles() {}
 
-    public Title(String titleId, String title, String type, String description, int year, String age, int runtime, List<String> genres, List<String> countries, double seasons, String imdbId, double imbdScore, double imbdVotes, double tmbdPopularity, double tmbdScore) {
+    public Titles(String titleId, String title, String type, String description, int year, String age, int runtime, /*List<String> genres, List<String> countries,*/ double seasons, String imdbId, double imbdScore, double imbdVotes, double tmbdPopularity, double tmbdScore) {
         this.titleId = titleId;
         this.title = title;
         this.titleType = type;
@@ -49,8 +48,8 @@ public class Title {
         this.titleReleaseYear = year;
         this.titleAgeCertification = age;
         this.titleRuntime = runtime;
-        this.titleGenres = genres;
-        this.titleProductionCountries = countries;
+        //this.titleGenres = genres;
+        //this.titleProductionCountries = countries;
         this.titleSeasons = seasons;
         this.titleImdbId = imdbId;
         this.titleImdbScore = imbdScore;
@@ -69,8 +68,8 @@ public class Title {
                 ", titleReleaseYear=" + titleReleaseYear +
                 ", titleAgeCertification='" + titleAgeCertification + '\'' +
                 ", titleRuntime=" + titleRuntime +
-                ", titleGenres=" + titleGenres +
-                ", titleProductionCountries=" + titleProductionCountries +
+                /*", titleGenres=" + titleGenres +
+                ", titleProductionCountries=" + titleProductionCountries +*/
                 ", titleSeasons=" + titleSeasons +
                 ", titleImdbId='" + titleImdbId + '\'' +
                 ", titleImdbScore=" + titleImdbScore +
@@ -108,13 +107,13 @@ public class Title {
         this.titleRuntime = titleRuntime;
     }
 
-    public void setTitleGenres(List<String> titleGenres) {
+    /*public void setTitleGenres(List<String> titleGenres) {
         this.titleGenres = titleGenres;
     }
 
     public void setTitleProductionCountries(List<String> titleProductionCountries) {
         this.titleProductionCountries = titleProductionCountries;
-    }
+    }*/
 
     public void setTitleSeasons(double titleSeasons) {
         this.titleSeasons = titleSeasons;
