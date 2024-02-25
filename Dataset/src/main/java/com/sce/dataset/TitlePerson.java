@@ -12,11 +12,16 @@ public class TitlePerson {
 
     String titleId;
 
+    //String roleName;
+    int roleId;
+
     protected TitlePerson(){}
 
-    public TitlePerson(int personId, String titleId){
+    public TitlePerson(int personId, String titleId, int roleId/*String roleName*/){
         this.personId = personId;
         this.titleId = titleId;
+        //this.roleName = roleName;
+        this.roleId = roleId;
     }
 
     @Override
@@ -25,6 +30,8 @@ public class TitlePerson {
                 "titlePersonId=" + titlePersonId +
                 ", personId=" + personId +
                 ", titleId='" + titleId + '\'' +
+                //", roleName=" + roleName +
+                ", roleId=" + roleId +
                 '}';
     }
 
@@ -51,4 +58,20 @@ public class TitlePerson {
     public void setTitleId(String titleId) {
         this.titleId = titleId;
     }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    /*public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }*/
 }
