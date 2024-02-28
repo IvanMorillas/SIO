@@ -8,7 +8,7 @@ CREATE TABLE persons(
 	person_id int not null unique primary key,
     title_id varchar(255) not null,
     person_name varchar(255) not null,
-    person_character varchar(255),
+    person_character text,
     person_role varchar(255) not null
 );
 
@@ -63,4 +63,15 @@ CREATE TABLE titles_countries (
 	title_id varchar(255) references title(title_id),
     country_id int references countries(country__id),
     primary key (title_id, country_id)
+);
+
+CREATE TABLE streamings (
+	streaming_id int auto_increment primary key,
+    streaming_name varchar(255) not null unique
+);
+
+CREATE TABLE titles_streamings (
+	title_id varchar(255) references title(title_id),
+    streaming_id int references streamings(streaming__id),
+    primary key (title_id, streaming_id)
 );
