@@ -25,15 +25,12 @@ public class DatasetApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DatasetApplication.class);
 	}
-
-	//Añadir la excepcion de una pelicula en diferentes plataformas sean diferentes.
-
 	@Bean
 	public CommandLineRunner readDirectory(IStreamings repositoryStreamings, ITitlesStreamings repositoryTitlesStreamings,
 										   IPerson repositoryPerson, ITitle repositoryTitle, IGenres repositoryGenres,
 										   ICountries repositoryCountries, ITitlesGenres repositoryTitleGenre,
 										   ITitlesCountries repositoryTitleCountry, ITitlePerson repositoryTitlePerson,
-										   IRoles repositoryRoles) {
+										   IRoles repositoryRoles, ITitlesDuplicated repositoryTitlesDuplicated) {
 		return (args) -> {
 			FileReader fileCSV = null;
 			CSVReader csvReader = null;
@@ -50,18 +47,12 @@ public class DatasetApplication {
 				String completeName = file.getName();
 				int index = completeName.lastIndexOf("_");
 				nameFile = completeName.substring(0, index);
-				//System.out.println(nameFile);
 				if (repositoryStreamings.findByStreamingName(nameFile) == null) {
 					titleNames.add(nameFile);
 					repositoryStreamings.save(new Streamings(nameFile));
 					streamingIds.add(repositoryStreamings.findByStreamingName(nameFile).getStreamingId());
 				}
-
 			}
-			for(Streamings streaming : repositoryStreamings.findAll()){
-					titleNames.add(streaming.getStreamingName());
-			}
-			System.out.println(titleNames);
 			for(String name : titleNames) {
 				try {
 					fileCSV = new FileReader("C:\\Users\\ivanm\\OneDrive\\Escritorio\\Universidad\\4º\\SIO\\Practica\\Practica1\\Dataset\\files\\" + name + "_Titles.csv");
@@ -142,14 +133,21 @@ public class DatasetApplication {
 						if (tmdb_score.isEmpty()) {
 							tmdb_score = "0.0";
 						}
-
 						if (!repositoryTitle.existsById(line[0])) {
 							repositoryTitle.save(new Titles(line[0], line[1], line[2], line[3], Integer.parseInt(line[4]),
 									line[5], Integer.parseInt(line[6]), Double.parseDouble(seasons),
 									line[10], Double.parseDouble(imdb_score), Double.parseDouble(imdb_votes),
 									Double.parseDouble(tmdb_popularity), Double.parseDouble(tmdb_score)));
+						}else{
+							Titles originalTitle = repositoryTitle.findById(line[0]).get();
+							boolean areEquals = compareData(line, originalTitle);
+							if(!areEquals){
+								repositoryTitlesDuplicated.save(new TitlesDuplicated(line[0], line[1], line[2], line[3], Integer.parseInt(line[4]),
+										line[5], Integer.parseInt(line[6]), Double.parseDouble(seasons),
+										line[10], Double.parseDouble(imdb_score), Double.parseDouble(imdb_votes),
+										Double.parseDouble(tmdb_popularity), Double.parseDouble(tmdb_score)));
+							}
 						}
-
 						for (Integer genreId : genreIds) {
 							if (!repositoryTitleGenre.existsByGenreIdAndTitleId(genreId, line[0])) {
 								TitlesGenres titleGenre = new TitlesGenres(line[0], genreId);
@@ -248,4 +246,26 @@ public class DatasetApplication {
 			}
 		};
 	}
+	private boolean compareData(String[] line, Titles originalTitle) {
+		return (isEmptyOrEqual(line[1], originalTitle.getTitle()) &&
+				isEmptyOrEqual(line[2], originalTitle.getTitleType()) &&
+				isEmptyOrEqual(line[3], originalTitle.getTitleDescription()) &&
+				(isEmpty(line[4]) || Integer.parseInt(line[4]) == originalTitle.getTitleReleaseYear()) &&
+				isEmptyOrEqual(line[5], originalTitle.getTitleAgeCertification()) &&
+				(isEmpty(line[6]) || Integer.parseInt(line[6]) == originalTitle.getTitleRuntime()) &&
+				(isEmpty(line[9]) || Double.parseDouble(line[9]) == originalTitle.getTitleSeasons()) &&
+				isEmptyOrEqual(line[10], originalTitle.getTitleImdbId()) &&
+				(isEmpty(line[11]) || Double.parseDouble(line[11]) == originalTitle.getTitleImdbScore()) &&
+				(isEmpty(line[12]) || Double.parseDouble(line[12]) == originalTitle.getTitleImdbVotes()) &&
+				(isEmpty(line[13]) || Double.parseDouble(line[13]) == originalTitle.getTitleTmdbPopularity()) &&
+				(isEmpty(line[14]) || Double.parseDouble(line[14]) == originalTitle.getTitleTmdbScore()));
+	}
+	private boolean isEmptyOrEqual(String value1, String value2) {
+		return (value1 == null || value1.isEmpty()) ? value2 == null || value2.isEmpty() : value1.equals(value2);
+	}
+
+	private boolean isEmpty(String value) {
+		return value == null || value.isEmpty();
+	}
+
 }

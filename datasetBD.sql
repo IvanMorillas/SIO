@@ -49,9 +49,11 @@ CREATE TABLE genres (
 );
 
 CREATE TABLE titles_genres (
-	title_id varchar(255) references title(title_id),
-    genre_id int references genres(genre_id),
-    primary key (title_id, genre_id)
+	title_id varchar(255) not null,
+    genre_id int not null,
+    primary key (title_id, genre_id),
+    foreign key (title_id) references titles(title_id),
+    foreign key (genre_id) references genres(genre_id)
 );
 
 CREATE TABLE countries (
@@ -60,9 +62,11 @@ CREATE TABLE countries (
 );
 
 CREATE TABLE titles_countries (
-	title_id varchar(255) references title(title_id),
-    country_id int references countries(country__id),
-    primary key (title_id, country_id)
+	title_id varchar(255) not null,
+    country_id int not null,
+    primary key (title_id, country_id),
+    foreign key (title_id) references titles(title_id),
+    foreign key (country_id) references countries(country_id)
 );
 
 CREATE TABLE streamings (
@@ -71,7 +75,25 @@ CREATE TABLE streamings (
 );
 
 CREATE TABLE titles_streamings (
-	title_id varchar(255) references title(title_id),
-    streaming_id int references streamings(streaming__id),
-    primary key (title_id, streaming_id)
+	title_id varchar(255) not null,
+    streaming_id int not null,
+    primary key (title_id, streaming_id),
+    foreign key (title_id) references titles(title_id),
+    foreign key (streaming_id) references streamings(streaming_id)
+);
+
+CREATE TABLE titles_duplicated(
+	title_id varchar(255) not null unique primary key,
+    title varchar(255) not null,
+    title_type varchar(255) not null,
+    title_description text,
+    title_release_year int,
+    title_age_certification varchar(255),
+    title_runtime int,
+    title_seasons float, 
+    title_imdb_id varchar(255),
+    title_imdb_score float,
+    title_imdb_votes float,
+    title_tmdb_popularity float,
+    title_tmdb_score float
 );

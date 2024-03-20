@@ -2,11 +2,8 @@ package com.sce.dataset;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
-public class Titles {
-
+public class TitlesDuplicated {
     @Id
     private String titleId;
 
@@ -22,10 +19,6 @@ public class Titles {
 
     private int titleRuntime;
 
-    //private List<String> titleGenres;
-
-    //private List<String> titleProductionCountries;
-
     private double titleSeasons;
 
     private String titleImdbId;
@@ -38,9 +31,11 @@ public class Titles {
 
     private double titleTmdbScore;
 
-    protected Titles() {}
+    protected TitlesDuplicated() {}
 
-    public Titles(String titleId, String title, String type, String description, int year, String age, int runtime, /*List<String> genres, List<String> countries,*/ double seasons, String imdbId, double imbdScore, double imbdVotes, double tmbdPopularity, double tmbdScore) {
+    public TitlesDuplicated(String titleId, String title, String type, String description, int year, String age,
+                            int runtime, double seasons, String imdbId, double imbdScore, double imbdVotes,
+                            double tmbdPopularity, double tmbdScore) {
         this.titleId = titleId;
         this.title = title;
         this.titleType = type;
@@ -48,8 +43,6 @@ public class Titles {
         this.titleReleaseYear = year;
         this.titleAgeCertification = age;
         this.titleRuntime = runtime;
-        //this.titleGenres = genres;
-        //this.titleProductionCountries = countries;
         this.titleSeasons = seasons;
         this.titleImdbId = imdbId;
         this.titleImdbScore = imbdScore;
@@ -60,16 +53,14 @@ public class Titles {
 
     @Override
     public String toString() {
-        return "Title{" +
-                " titleId='" + titleId + '\'' +
+        return "TitlesDuplicated{" +
+                "titleId='" + titleId + '\'' +
                 ", title='" + title + '\'' +
                 ", titleType='" + titleType + '\'' +
                 ", titleDescription='" + titleDescription + '\'' +
                 ", titleReleaseYear=" + titleReleaseYear +
                 ", titleAgeCertification='" + titleAgeCertification + '\'' +
                 ", titleRuntime=" + titleRuntime +
-                /*", titleGenres=" + titleGenres +
-                ", titleProductionCountries=" + titleProductionCountries +*/
                 ", titleSeasons=" + titleSeasons +
                 ", titleImdbId='" + titleImdbId + '\'' +
                 ", titleImdbScore=" + titleImdbScore +
@@ -83,108 +74,100 @@ public class Titles {
         return titleId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getTitleType() {
-        return titleType;
-    }
-
-    public String getTitleDescription() {
-        return titleDescription;
-    }
-
-    public int getTitleReleaseYear() {
-        return titleReleaseYear;
-    }
-
-    public String getTitleAgeCertification() {
-        return titleAgeCertification;
-    }
-
-    public int getTitleRuntime() {
-        return titleRuntime;
-    }
-
-    public double getTitleSeasons() {
-        return titleSeasons;
-    }
-
-    public String getTitleImdbId() {
-        return titleImdbId;
-    }
-
-    public double getTitleImdbScore() {
-        return titleImdbScore;
-    }
-
-    public double getTitleImdbVotes() {
-        return titleImdbVotes;
-    }
-
-    public double getTitleTmdbPopularity() {
-        return titleTmdbPopularity;
-    }
-
-    public double getTitleTmdbScore() {
-        return titleTmdbScore;
-    }
-
     public void setTitleId(String titleId) {
         this.titleId = titleId;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getTitleType() {
+        return titleType;
+    }
+
     public void setTitleType(String titleType) {
         this.titleType = titleType;
+    }
+
+    public String getTitleDescription() {
+        return titleDescription;
     }
 
     public void setTitleDescription(String titleDescription) {
         this.titleDescription = titleDescription;
     }
 
+    public int getTitleReleaseYear() {
+        return titleReleaseYear;
+    }
+
     public void setTitleReleaseYear(int titleReleaseYear) {
         this.titleReleaseYear = titleReleaseYear;
+    }
+
+    public String getTitleAgeCertification() {
+        return titleAgeCertification;
     }
 
     public void setTitleAgeCertification(String titleAgeCertification) {
         this.titleAgeCertification = titleAgeCertification;
     }
 
+    public int getTitleRuntime() {
+        return titleRuntime;
+    }
+
     public void setTitleRuntime(int titleRuntime) {
         this.titleRuntime = titleRuntime;
     }
 
-    /*public void setTitleGenres(List<String> titleGenres) {
-        this.titleGenres = titleGenres;
+    public double getTitleSeasons() {
+        return titleSeasons;
     }
-
-    public void setTitleProductionCountries(List<String> titleProductionCountries) {
-        this.titleProductionCountries = titleProductionCountries;
-    }*/
 
     public void setTitleSeasons(double titleSeasons) {
         this.titleSeasons = titleSeasons;
+    }
+
+    public String getTitleImdbId() {
+        return titleImdbId;
     }
 
     public void setTitleImdbId(String titleImdbId) {
         this.titleImdbId = titleImdbId;
     }
 
+    public double getTitleImdbScore() {
+        return titleImdbScore;
+    }
+
     public void setTitleImdbScore(double titleImdbScore) {
         this.titleImdbScore = titleImdbScore;
+    }
+
+    public double getTitleImdbVotes() {
+        return titleImdbVotes;
     }
 
     public void setTitleImdbVotes(double titleImdbVotes) {
         this.titleImdbVotes = titleImdbVotes;
     }
 
+    public double getTitleTmdbPopularity() {
+        return titleTmdbPopularity;
+    }
+
     public void setTitleTmdbPopularity(double titleTmdbPopularity) {
         this.titleTmdbPopularity = titleTmdbPopularity;
+    }
+
+    public double getTitleTmdbScore() {
+        return titleTmdbScore;
     }
 
     public void setTitleTmdbScore(double titleTmdbScore) {
