@@ -32,31 +32,40 @@ public class DatasetApplication {
 										   ITitlesCountries repositoryTitleCountry, ITitlePerson repositoryTitlePerson,
 										   IRoles repositoryRoles, ITitlesDuplicated repositoryTitlesDuplicated) {
 		return (args) -> {
+			System.out.println("Reading files...");
 			FileReader fileCSV = null;
 			CSVReader csvReader = null;
 			List<String> titleIds = new ArrayList<>();
 			List<String> titleNames = new ArrayList<>();
 			List<Integer> streamingIds = new ArrayList<>();
 			String nameFile;
-			File directory = new File("C:\\Users\\ivanm\\OneDrive\\Escritorio\\Universidad\\4º\\SIO\\Practica\\Practica1\\Dataset\\files");
+			File directory = new File("C:\\Users\\Usuario\\Documents\\SIO\\Dataset\\files");
+			System.out.println("Reading files from " + directory.getAbsolutePath() + " directory...");
 			if(!directory.exists()){
 				System.out.println("Directory not found!");
 			}
 			File[] files = directory.listFiles();
 			for(File file : files) {
+				System.out.println(files.length + " files found.");
+				System.out.println("Reading " + file.getName() + " file...");
 				String completeName = file.getName();
 				int index = completeName.lastIndexOf("_");
 				nameFile = completeName.substring(0, index);
-				if (repositoryStreamings.findByStreamingName(nameFile) == null) {
+				System.out.println(repositoryStreamings.existsByStreamingName(nameFile));
+				titleNames.add(nameFile);
+                if (repositoryStreamings.findByStreamingName(nameFile) == null) {
+					System.out.println("Saving " + nameFile + " file...");
 					titleNames.add(nameFile);
 					repositoryStreamings.save(new Streamings(nameFile));
 					streamingIds.add(repositoryStreamings.findByStreamingName(nameFile).getStreamingId());
 				}
+				System.out.println("All files have been readed and saved.");
 			}
 			for(String name : titleNames) {
+				System.out.println("Reading " + name + " files...");
 				try {
-					fileCSV = new FileReader("C:\\Users\\ivanm\\OneDrive\\Escritorio\\Universidad\\4º\\SIO\\Practica\\Practica1\\Dataset\\files\\" + name + "_Titles.csv");
-					Long total = Files.lines(Paths.get("C:\\Users\\ivanm\\OneDrive\\Escritorio\\Universidad\\4º\\SIO\\Practica\\Practica1\\Dataset\\files\\" + name + "_Titles.csv")).count();
+					fileCSV = new FileReader("C:\\Users\\Usuario\\Documents\\SIO\\Dataset\\files\\" + name + "_Titles.csv");
+					Long total = Files.lines(Paths.get("C:\\Users\\Usuario\\Documents\\SIO\\Dataset\\files\\" + name + "_Titles.csv")).count();
 					System.out.println(name + "_Titles.csv reading...");
 					String[] line = null;
 					int progress = 0;
@@ -187,8 +196,8 @@ public class DatasetApplication {
 				}
 				System.out.println("All titles have been readed and saved.");
 				try {
-					fileCSV = new FileReader("C:\\Users\\ivanm\\OneDrive\\Escritorio\\Universidad\\4º\\SIO\\Practica\\Practica1\\Dataset\\files\\" + name + "_Credits.csv");
-					Long total = Files.lines(Paths.get("C:\\Users\\ivanm\\OneDrive\\Escritorio\\Universidad\\4º\\SIO\\Practica\\Practica1\\Dataset\\files\\" + name + "_Credits.csv")).count();
+					fileCSV = new FileReader("C:\\Users\\Usuario\\Documents\\SIO\\Dataset\\files\\" + name + "_Credits.csv");
+					Long total = Files.lines(Paths.get("C:\\Users\\Usuario\\Documents\\SIO\\Dataset\\files\\" + name + "_Credits.csv")).count();
 					System.out.println(name + "_Credits.csv reading...");
 					int progress = 0;
 					CSVParser puntoYcoma = new CSVParserBuilder().withSeparator(',').build();
